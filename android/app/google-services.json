@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "942702798233",
+    "project_id": "eventico-8b5e6",
+    "storage_bucket": "eventico-8b5e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942702798233:android:83d2f3eaaba3046cb71f08",
+        "android_client_info": {
+          "package_name": "com.example.eventico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942702798233-rtdhrtv3brlf25n0j2tn7htu9dlp5rk2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwMBayzfWqen1gt9CYQ2oQHoeW6E39enA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942702798233-rtdhrtv3brlf25n0j2tn7htu9dlp5rk2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
