@@ -14,6 +14,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   var isLogin = true;
   var isLoading = false;
 
+  @override
   Widget build(BuildContext context) {
     var provState = ref.watch(AuthProvider);
     if (provState['isUserFailed'] ?? false) {

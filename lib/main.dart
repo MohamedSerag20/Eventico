@@ -10,7 +10,6 @@ import 'package:eventico/firebase_options.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:json_theme/json_theme.dart';
-import 'package:eventico/Providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +50,7 @@ class _MyAppState extends ConsumerState<MyApp> {
               return const LoadingScreen();
             } else if (snapshot.hasData) {
               ref.read(AuthProvider.notifier).gettingNamePick(context);
-              ref.read(ImportExportDataProvider.notifier).exportingEvents();
+              ref.read(ImportExportDataProvider.notifier).importingEvents();
               return const EventsScreen();
             } else {
               return const AuthScreen();

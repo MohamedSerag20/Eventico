@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:eventico/Widgets/signup_texts.dart' as signup;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,7 +86,7 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Authentication Failed.')));
-    } on Exception catch (error) {
+    } on Exception {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('An Error has Happened, Try Later..')));

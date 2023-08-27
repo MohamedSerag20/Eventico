@@ -1,7 +1,5 @@
 import 'package:eventico/Widgets/event_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Models/event.dart';
 import '../Providers/importExportData_provider.dart';
@@ -17,7 +15,9 @@ class _EventsAddState extends ConsumerState<EventsAdd> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> userEventsArray = ref.watch(ImportExportDataProvider);
-    print(userEventsArray);
+    if (userEventsArray.isEmpty) {
+      return Center(child: Text("No Events Exist", style: Theme.of(context).textTheme.titleMedium,));
+    }
     final userEventsTransArray = userEventsArray
         .map((e) => Event(
             userKey: e['UserKey'],
@@ -33,7 +33,7 @@ class _EventsAddState extends ConsumerState<EventsAdd> {
       child: Column(
         children: [
           Expanded(
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Card(
                 elevation: 5,

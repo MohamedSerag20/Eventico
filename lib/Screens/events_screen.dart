@@ -1,7 +1,7 @@
 import 'package:eventico/Providers/importExportData_provider.dart';
+import 'package:eventico/Screens/add_event_screen.dart';
 import 'package:eventico/Screens/loading_screen.dart';
-import 'package:eventico/Widgets/events_add.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:eventico/Widgets/events_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:eventico/Providers/auth_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,7 +50,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 ),
                 elevation: 30,
                 onPressed: () {
-                  ref.read(ImportExportDataProvider.notifier).importingEvents();
+                  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const AddEventScr())));
+                  // ref.read(ImportExportDataProvider.notifier).exportingEvents();
                 },
                 isExtended: true,
                 child: const Icon(Icons.add),

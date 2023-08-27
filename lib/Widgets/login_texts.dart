@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'package:eventico/Providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 final formKeyLogin = GlobalKey<FormState>();
 String enteredEmail = '';
@@ -36,8 +33,7 @@ class _LoginTextsState extends ConsumerState<LoginTexts> {
                   ),
                   validator: (value) {
                     if (value!.trim().isEmpty ||
-                        !value.contains('@') ||
-                        value == null) {
+                        !value.contains('@')) {
                       return 'Your Email is Incorrect...';
                     } else {
                       return null;
@@ -61,8 +57,7 @@ class _LoginTextsState extends ConsumerState<LoginTexts> {
                   ),
                   validator: (value) {
                     if (value!.trim().isEmpty ||
-                        value.length < 6 ||
-                        value == null) {
+                        value.length < 6) {
                       return 'Your Password is Should be More Than Six Characters...';
                     } else {
                       return null;
