@@ -1,4 +1,3 @@
-import 'package:eventico/Providers/importExportData_provider.dart';
 import 'package:eventico/Screens/add_event_screen.dart';
 import 'package:eventico/Screens/loading_screen.dart';
 import 'package:eventico/Widgets/events_scroll.dart';

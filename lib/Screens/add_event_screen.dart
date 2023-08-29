@@ -14,7 +14,7 @@ class _AddEventScrState extends State<AddEventScr> {
   List<File> imageF = [];
   String? discription;
   String? story;
-  List<Map<String, String>>? withWhom;
+  List<Map<String, String>> withWhom = [];
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,28 @@ class _AddEventScrState extends State<AddEventScr> {
                             height: 180,
                             width: 210,
                             decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
+                                gradient: LinearGradient(colors: [
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.05),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.1),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.15),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.2),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.25),
+                                ]),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(25))),
                             child: const Column(
@@ -88,6 +107,28 @@ class _AddEventScrState extends State<AddEventScr> {
                           height: 90,
                           width: 105,
                           decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [
+                                Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.05),
+                                Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.1),
+                                Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.15),
+                                Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.2),
+                                Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.25),
+                              ]),
                               color: Theme.of(context)
                                   .colorScheme
                                   .primaryContainer,
@@ -200,7 +241,9 @@ class _AddEventScrState extends State<AddEventScr> {
                         onSaved: (newValue) {
                           discription = newValue;
                         },
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         enableSuggestions: true,
                         maxLines: 3,
                       ),
@@ -212,39 +255,72 @@ class _AddEventScrState extends State<AddEventScr> {
                         onSaved: (newValue) {
                           story = newValue;
                         },
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         enableSuggestions: true,
                         maxLines: 3,
                       ),
-                      Text('With Whom',textAlign: TextAlign.center,style: TextStyle(decorationStyle: TextDecorationStyle.dashed,fontSize: 20),),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                label: Text('Email (Optional)'),
-                              ),
-                              onSaved: (newValue) {
-                              },
-                              validator: (value) {},
-                              enableSuggestions: true,
-                              maxLines: 1,
-                            ),
-                          ),const SizedBox(width: 10),
-                          Expanded(
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                label: Text('Name'),
-                              ),
-                              onSaved: (newValue) {
-                              },
-                              validator: (value) {},
-                              enableSuggestions: true,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ],
-                      )
+                      const Text(
+                        'With Whom',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            decorationStyle: TextDecorationStyle.dashed,
+                            fontSize: 20),
+                      ),
+                      ...withWhom
+                          .map((e) => Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: const InputDecoration(
+                                        label: Text('Email (Optional)'),
+                                      ),
+                                      onSaved: (newValue) {
+                                        e['Email'] = newValue!;
+                                      },
+                                      validator: (value) {
+                                        return null;
+                                      },
+                                      enableSuggestions: true,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: const InputDecoration(
+                                        label: Text('Name'),
+                                      ),
+                                      onSaved: (newValue) {
+                                        e['Name'] = newValue!;
+                                      },
+                                      validator: (value) {
+                                        return null;
+                                      },
+                                      enableSuggestions: true,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                ],
+                              ))
+                          .toList(),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              withWhom.add({'Email': '', 'Name': ''});
+                            });
+                          },
+                          child: const Row(
+                            children: [
+                              Spacer(),
+                              Text('Add a Friend'),
+                              Icon(Icons.add)
+                            ],
+                          )),
                     ],
                   ),
                 )),
