@@ -20,7 +20,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
 
     if (isUserDone) {
       return Scaffold(
-        appBar: AppBar(
+        appBar: AppBar(toolbarHeight: 70,
+          backgroundColor: Theme.of(context).colorScheme.onSecondary,
           title: Text("  ${userInfo['Username']}"),
           leading: CircleAvatar(
             foregroundImage: NetworkImage(userInfo['ImageUrl']),
@@ -49,7 +50,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 ),
                 elevation: 30,
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const AddEventScr())));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => const AddEventScr())));
                   // ref.read(ImportExportDataProvider.notifier).exportingEvents();
                 },
                 isExtended: true,
