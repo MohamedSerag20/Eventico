@@ -21,7 +21,7 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>> {
     }
   }
 
-  exportingEvents() async {
+  exportingEvents(Map<String, Object> newValue) async {
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     final userCredintials = await FirebaseFirestore.instance
         .collection(currentUid)

@@ -39,8 +39,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // var loginMap = ref.watch(loginProvider);
-    // print(loginMap.toString());
     return MaterialApp(
       darkTheme: widget.theme,
       title: 'Eventico',

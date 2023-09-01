@@ -15,7 +15,6 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
   String? password;
   String? username;
   String? imageUrl;
-  bool isUserDone = false;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
   sign_in({required email, required password, required context}) async {
@@ -35,6 +34,7 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
 
   gettingNamePick(BuildContext context) async {
     try {
+      //firebaseAuth.signOut();
       final currentUid = firebaseAuth.currentUser!.uid;
       final userCredintials = await FirebaseFirestore.instance
           .collection(currentUid)
@@ -56,7 +56,6 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
         'Username': username!,
         'ImageUrl': imageUrl!,
       };
-      isUserDone = true;
     } on Exception catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
@@ -80,7 +79,20 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
         email: email,
         password: password,
       );
-
+      final path = '$username images/userImage/$username image';
+      await firebaseStorage.ref().child(path).putFile(imageF);
+      final imageUrl = await firebaseStorage.ref(path).getDownloadURL();
+      print(imageUrl);
+      fireStore
+          .collection(firebaseAuth.currentUser!.uid)
+          .doc('UserSpecifications')
+          .set({
+        "Email": email.toString(),
+        "ImageUrl": imageUrl.toString(),
+        "Password": password.toString(),
+        "Username": username.toString(),
+      });
+      print('/////////////////////////////////////////////////////////////////////');
     } on FirebaseAuthException catch (error) {
       state = {'isUserFailed': true};
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -92,7 +104,6 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
           const SnackBar(content: Text('An Error has Happened, Try Later..')));
     }
   }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 }

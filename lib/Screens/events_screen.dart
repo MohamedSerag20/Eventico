@@ -15,10 +15,9 @@ class EventsScreen extends ConsumerStatefulWidget {
 class _EventsScreenState extends ConsumerState<EventsScreen> {
   @override
   Widget build(BuildContext context) {
-    bool isUserDone = ref.watch(AuthProvider.notifier).isUserDone;
     Map<String, dynamic> userInfo = ref.watch(AuthProvider);
 
-    if (isUserDone) {
+    if (userInfo.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(toolbarHeight: 70,
           backgroundColor: Theme.of(context).colorScheme.onSecondary,
@@ -32,7 +31,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 onPressed: () {
                   // ignore: invalid_use_of_protected_member
                   ref.refresh(AuthProvider.notifier).state;
-                  ref.refresh(AuthProvider.notifier).isUserDone;
                   firebaseAuth.signOut();
                 },
                 icon: const Icon(Icons.exit_to_app))

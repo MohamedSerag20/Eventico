@@ -1,16 +1,18 @@
 import 'dart:io';
 
+import 'package:eventico/Providers/importExportData_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddEventScr extends StatefulWidget {
+class AddEventScr extends ConsumerStatefulWidget {
   const AddEventScr({super.key});
 
   @override
-  State<AddEventScr> createState() => _AddEventScrState();
+  ConsumerState<AddEventScr> createState() => _AddEventScrState();
 }
 
-class _AddEventScrState extends State<AddEventScr> {
+class _AddEventScrState extends ConsumerState<AddEventScr> {
   File? imagePF;
   List<File> imageFF = [];
   String? discription;
@@ -21,9 +23,18 @@ class _AddEventScrState extends State<AddEventScr> {
       if (imagePF == null) {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: const Text('You did not Select Place Picture !!!',),backgroundColor: Theme.of(context).colorScheme.error,));
+            SnackBar(content: const Text('You did not Select A Place Picture !!!',),backgroundColor: Theme.of(context).colorScheme.error,));
       } else {
         formKey.currentState!.save();
+        // ref.read(ImportExportDataProvider.notifier).exportingEvents({
+        //   'Date': DateTime.now().toString(),
+        //   'Discription': discription.toString(),
+        //   'EventName': '',
+        //   'ImagesUrl': [],
+        //   'Story': story.toString(),
+        //   'UserKey': '',
+        //   'WithWhom': withWhom
+        // });
       }
     }
   }
