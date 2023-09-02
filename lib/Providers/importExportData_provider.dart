@@ -12,7 +12,7 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>> {
         .doc('UserEvents')
         .get();
     final userCredintialsMap = userCredintials.data();
-    if (userCredintialsMap!.isEmpty) {
+    if (userCredintialsMap == null || userCredintialsMap.isEmpty) {
       state = [];
     }
     else{

@@ -47,7 +47,7 @@ class _MyAppState extends ConsumerState<MyApp> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const LoadingScreen();
             } else if (snapshot.hasData) {
-              ref.read(AuthProvider.notifier).gettingNamePick(context);
+              //firebaseAuth.signOut();
               ref.read(ImportExportDataProvider.notifier).importingEvents();
               return const EventsScreen();
             } else {

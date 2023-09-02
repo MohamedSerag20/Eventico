@@ -66,6 +66,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                   email: login.enteredEmail,
                                   password: login.enteredPassword,
                                   context: context);
+                              // ref
+                              //     .read(AuthProvider.notifier)
+                              //     .gettingNamePick(context);
                             }
                           } else {
                             if (signup.formKeyUp.currentState!.validate()) {

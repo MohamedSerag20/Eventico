@@ -16,10 +16,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> userInfo = ref.watch(AuthProvider);
-
-    if (userInfo.isNotEmpty) {
+    if (userInfo['SignedUp'] ?? false) {
+      return const LoadingScreen();
+    } else if (userInfo.isNotEmpty) {
       return Scaffold(
-        appBar: AppBar(toolbarHeight: 70,
+        appBar: AppBar(
+          toolbarHeight: 70,
           backgroundColor: Theme.of(context).colorScheme.onSecondary,
           title: Text("  ${userInfo['Username']}"),
           leading: CircleAvatar(
@@ -59,7 +61,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           ],
         ),
       );
-    } else {
+    } // the signUp checker
+    else {
+      ref.read(AuthProvider.notifier).gettingNamePick(context);
       return const LoadingScreen();
     }
   }

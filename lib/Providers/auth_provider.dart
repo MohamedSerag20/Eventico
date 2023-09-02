@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,11 +21,31 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
 //////////////////////////////////////////////////////////////////////////////////////////////
   sign_in({required email, required password, required context}) async {
     try {
-      state = {};
-      final userCredentials = await firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      // final currentUid = firebaseAuth.currentUser!.uid;
+      // final userCredintials = await FirebaseFirestore.instance
+      //     .collection(currentUid)
+      //     .doc('UserSpecifications')
+      //     .get();
+      // final userMap = userCredintials.data();
+      // username = userMap!['Username'] as String;
+      // imageUrl = userMap['ImageUrl'] as String;
+
+      // final currentUidy = firebaseAuth.currentUser!.uid;
+      // final userCredintialsy = await FirebaseFirestore.instance
+      //     .collection(currentUid)
+      //     .doc('UserSpecifications')
+      //     .get();
+      // final userMapy = userCredintialsy.data();
+      // username = userMapy!['Username'] as String;
+      // imageUrl = userMapy['ImageUrl'] as String;
+      // state = {
+      //   'Username': username!,
+      //   'ImageUrl': imageUrl!,
+      // };
     } on FirebaseAuthException catch (error) {
       state = {'isUserFailed': true};
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -70,19 +92,18 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
       required username,
       required imageF,
       required context}) async {
-    this.email = email;
-    this.password = password;
     this.username = username;
+    state = {
+      'SignedUp': true,
+    };
     try {
-      state = {};
-      final UserCredentials = await firebaseAuth.createUserWithEmailAndPassword(
+      await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       final path = '$username images/userImage/$username image';
       await firebaseStorage.ref().child(path).putFile(imageF);
       final imageUrl = await firebaseStorage.ref(path).getDownloadURL();
-      print(imageUrl);
       fireStore
           .collection(firebaseAuth.currentUser!.uid)
           .doc('UserSpecifications')
@@ -92,7 +113,10 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
         "Password": password.toString(),
         "Username": username.toString(),
       });
-      print('/////////////////////////////////////////////////////////////////////');
+      state = {
+        'Username': username,
+        'ImageUrl': imageUrl,
+      };
     } on FirebaseAuthException catch (error) {
       state = {'isUserFailed': true};
       ScaffoldMessenger.of(context).clearSnackBars();
