@@ -32,6 +32,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             IconButton(
                 onPressed: () {
                   // ignore: invalid_use_of_protected_member
+                  ref.refresh(IsSignprovider.notifier).state;
+                  // ignore: invalid_use_of_protected_member
                   ref.refresh(AuthProvider.notifier).state;
                   firebaseAuth.signOut();
                 },
@@ -63,7 +65,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       );
     } // the signUp checker
     else {
-      ref.read(AuthProvider.notifier).gettingNamePick(context);
+      // ref.read(AuthProvider.notifier).gettingNamePick(context);
       return const LoadingScreen();
     }
   }

@@ -39,6 +39,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    bool isSignUp = ref.watch(IsSignprovider);
     return MaterialApp(
       darkTheme: widget.theme,
       title: 'Eventico',
@@ -47,8 +48,13 @@ class _MyAppState extends ConsumerState<MyApp> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const LoadingScreen();
             } else if (snapshot.hasData) {
-              //firebaseAuth.signOut();
-              ref.read(ImportExportDataProvider.notifier).importingEvents();
+              firebaseAuth.signOut();
+              if (isSignUp) {
+                ref.read(AuthProvider.notifier).savingUser();
+              } else {
+                ref.read(AuthProvider.notifier).gettingNamePick(context);
+                ref.read(ImportExportDataProvider.notifier).importingEvents();
+              }
               return const EventsScreen();
             } else {
               return const AuthScreen();
