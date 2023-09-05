@@ -80,6 +80,7 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
     this.username = username;
     this.imageF = imageF;
     try {
+      isSignUp.isSignUp();
       await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -89,10 +90,6 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Authentication Failed.')));
-    } on Exception {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('An Error has Happened, Try Later..')));
     }
   }
 
@@ -113,7 +110,7 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
       'Username': username,
       'ImageUrl': imageUrl,
     };
-    //isSignUp.isNotSignUp();
+    isSignUp.stopSignUp();
   }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,12 +120,13 @@ class IsSignUp extends StateNotifier<bool> {
   IsSignUp() : super(false);
 
   isSignUp() {
+    
     state = true;
   }
 
-  // isNotSignUp() {
-  //   state = false;
-  // }
+  stopSignUp() {
+    state = false;
+  }
 }
 
 final AuthProvider =

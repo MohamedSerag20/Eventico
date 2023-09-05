@@ -72,7 +72,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             }
                           } else {
                             if (signup.formKeyUp.currentState!.validate()) {
-                              ref.read(IsSignprovider.notifier).isSignUp();
                               setState(() {
                                 isLoading = true;
                               });

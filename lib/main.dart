@@ -48,7 +48,7 @@ class _MyAppState extends ConsumerState<MyApp> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const LoadingScreen();
             } else if (snapshot.hasData) {
-              firebaseAuth.signOut();
+              //firebaseAuth.signOut();
               if (isSignUp) {
                 ref.read(AuthProvider.notifier).savingUser();
               } else {
@@ -60,7 +60,13 @@ class _MyAppState extends ConsumerState<MyApp> {
               return const AuthScreen();
             }
           },
-          stream: firebaseAuth.authStateChanges()),
+          stream: firebaseAuth.authStateChanges().skipWhile((element) {
+            if (isSignUp) {
+              print("hhhh");
+              return true;
+            }
+            return false;
+          })),
       themeMode: ThemeMode.dark,
     );
   }
