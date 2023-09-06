@@ -60,13 +60,7 @@ class _MyAppState extends ConsumerState<MyApp> {
               return const AuthScreen();
             }
           },
-          stream: firebaseAuth.authStateChanges().skipWhile((element) {
-            if (isSignUp) {
-              print("hhhh");
-              return true;
-            }
-            return false;
-          })),
+          stream: firebaseAuth.authStateChanges()),
       themeMode: ThemeMode.dark,
     );
   }

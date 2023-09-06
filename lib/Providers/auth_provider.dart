@@ -15,7 +15,7 @@ final fireStore = FirebaseFirestore.instance;
 class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
   AuthNotifier({required this.isSignUp}) : super({});
 
-  IsSignUp isSignUp;
+  IsSign isSignUp;
   String? email;
   String? password;
   String? username;
@@ -116,11 +116,13 @@ class AuthNotifier extends StateNotifier<Map<String, dynamic>> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-class IsSignUp extends StateNotifier<bool> {
-  IsSignUp() : super(false);
+class IsSign extends StateNotifier<bool> {
+  IsSign() : super(false);
 
   isSignUp() {
-    
+    state = true;
+  }
+    isSignIn() {
     state = true;
   }
 
@@ -134,6 +136,6 @@ final AuthProvider =
   return AuthNotifier(isSignUp: ref.watch(IsSignprovider.notifier));
 });
 
-final IsSignprovider = StateNotifierProvider<IsSignUp, bool>((ref) {
-  return IsSignUp();
+final IsSignprovider = StateNotifierProvider<IsSign, bool>((ref) {
+  return IsSign();
 });
