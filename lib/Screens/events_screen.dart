@@ -15,10 +15,8 @@ class EventsScreen extends ConsumerStatefulWidget {
 class _EventsScreenState extends ConsumerState<EventsScreen> {
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> userInfo = ref.watch(AuthProvider);
-    if (userInfo['SignedUp'] ?? false) {
-      return const LoadingScreen();
-    } else if (userInfo.isNotEmpty) {
+    Map<String, dynamic> userInfo = ref.watch(AuthProvider.notifier).content;
+    if (userInfo.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(
           toolbarHeight: 70,
@@ -32,9 +30,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             IconButton(
                 onPressed: () {
                   // ignore: invalid_use_of_protected_member
-                  ref.refresh(IsSignprovider.notifier).state;
+                  // ref.refresh(IsSignprovider.notifier).state;
                   // ignore: invalid_use_of_protected_member
-                  ref.refresh(AuthProvider.notifier).state;
+                  //ref.refresh(AuthProvider.notifier).state;
                   firebaseAuth.signOut();
                 },
                 icon: const Icon(Icons.exit_to_app))

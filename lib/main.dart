@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:eventico/Providers/auth_provider.dart';
 import 'package:eventico/Providers/importExportData_provider.dart';
@@ -36,32 +37,35 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    bool isSignUp = ref.watch(IsSignprovider);
+    bool? isLoading = ref.watch(AuthProvider.notifier).isLoading;
+
     return MaterialApp(
       darkTheme: widget.theme,
       title: 'Eventico',
-      home: StreamBuilder(
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LoadingScreen();
-            } else if (snapshot.hasData) {
-              //firebaseAuth.signOut();
-              if (isSignUp) {
-                ref.read(AuthProvider.notifier).savingUser();
-              } else {
-                ref.read(AuthProvider.notifier).gettingNamePick(context);
-                ref.read(ImportExportDataProvider.notifier).importingEvents();
-              }
-              return const EventsScreen();
-            } else {
-              return const AuthScreen();
-            }
-          },
-          stream: firebaseAuth.authStateChanges()),
+      home: (isLoading == null)
+          ? const AuthScreen()
+          : (isLoading)
+              ? const LoadingScreen()
+              : const EventsScreen(),
       themeMode: ThemeMode.dark,
     );
   }
 }
+
+
+// StreamBuilder(
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               return const LoadingScreen();
+//             } else if (snapshot.hasData) {
+//               //firebaseAuth.signOut();
+//               ref.read(AuthProvider.notifier).gettingNamePick(context);
+//               ref.read(ImportExportDataProvider.notifier).importingEvents();
+//               return const EventsScreen();
+//             } else {
+//               return const AuthScreen();
+//             }
+//           },
+//           stream: firebaseAuth.authStateChanges())
