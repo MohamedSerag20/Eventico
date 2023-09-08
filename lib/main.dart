@@ -5,6 +5,7 @@ import 'package:eventico/Providers/importExportData_provider.dart';
 import 'package:eventico/Screens/auth_screen.dart';
 import 'package:eventico/Screens/events_screen.dart';
 import 'package:eventico/Screens/loading_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:eventico/firebase_options.dart';
@@ -39,33 +40,46 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
-    bool? isLoading = ref.watch(AuthProvider.notifier).isLoading;
-
     return MaterialApp(
       darkTheme: widget.theme,
       title: 'Eventico',
-      home: (isLoading == null)
-          ? const AuthScreen()
-          : (isLoading)
-              ? const LoadingScreen()
-              : const EventsScreen(),
+      home: StreamBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              if (firebaseAuth.currentUser != null) {
+                //firebaseAuth.signOut();
+                print('fd');
+                ref.read(AuthProvider.notifier).gettingNamePick(context);
+                ref.read(ImportExportDataProvider.notifier).importingEvents();
+                return const EventsScreen();
+              } else {
+                return const AuthScreen();
+              }
+            } else {
+              if (snapshot.data!['isLoading']! && snapshot.data!['isSigned']!) {
+                print('second');
+                ref.read(AuthProvider.notifier).gettingNamePick(context);
+                ref.read(ImportExportDataProvider.notifier).importingEvents();
+                return const EventsScreen();
+              } else {
+                ref.read(ImportExportDataProvider.notifier).importingEvents();
+                return const EventsScreen();
+              }
+            }
+            // else if (!snapshot.data!['isLoading']! &&
+            //     snapshot.data!['isSigned']!) {
+            //   ref.read(AuthProvider.notifier).gettingNamePick(context);
+            //   ref.read(ImportExportDataProvider.notifier).importingEvents();
+            //   return const EventsScreen();
+            // }
+            //firebaseAuth.signOut();
+            // else {
+            //   return const LoadingScreen();
+            // }
+          },
+          stream: ref.watch(AuthProvider.notifier).userState.stream),
       themeMode: ThemeMode.dark,
     );
   }
 }
-
-
-// StreamBuilder(
-//           builder: (context, snapshot) {
-//             if (snapshot.connectionState == ConnectionState.waiting) {
-//               return const LoadingScreen();
-//             } else if (snapshot.hasData) {
-//               //firebaseAuth.signOut();
-//               ref.read(AuthProvider.notifier).gettingNamePick(context);
-//               ref.read(ImportExportDataProvider.notifier).importingEvents();
-//               return const EventsScreen();
-//             } else {
-//               return const AuthScreen();
-//             }
-//           },
-//           stream: firebaseAuth.authStateChanges())
+//snapshot.data!['isLoading']! && !snapshot.data!['isSigned']!

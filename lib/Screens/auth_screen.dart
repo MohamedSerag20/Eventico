@@ -16,8 +16,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool provState = ref.watch(AuthProvider.notifier).errorr;
-    if (provState) {
+    bool? provState = ref.watch(AuthProvider.notifier).errorr;
+    print(provState);
+    if (provState ?? false) {
       setState(() {
         isLoading = false;
       });

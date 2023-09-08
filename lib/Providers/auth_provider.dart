@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -19,31 +20,17 @@ class AuthNotifier extends ChangeNotifier {
   String? email;
   String? password;
   Map<String, dynamic> content = {};
-  bool? isLoading;
-  UserCredential? user;
-  bool errorr = false;
+  StreamController<Map<String, bool>> userState = StreamController();
+  bool? errorr;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
   sign_in({required email, required password, required context}) async {
     try {
-      isLoading = true;
-      user = await firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final currentUid = firebaseAuth.currentUser!.uid;
-      final userCredintials = await FirebaseFirestore.instance
-          .collection(currentUid)
-          .doc('UserSpecifications')
-          .get();
-      final userMap = userCredintials.data();
-      final username = userMap!['Username'] as String;
-      final imageUrl = userMap['ImageUrl'] as String;
-      content = {
-        'Username': username,
-        'ImageUrl': imageUrl,
-      };
-      isLoading = false;
+      userState.add({'isLoading':true,'isSigned':true});
     } on FirebaseAuthException catch (error) {
       errorr = true;
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -67,7 +54,9 @@ class AuthNotifier extends ChangeNotifier {
         'Username': username,
         'ImageUrl': imageUrl,
       };
+      userState.add({'isLoading': false, 'isSigned': true});
     } on Exception catch (error) {
+      errorr = true;
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(error.toString())));
@@ -83,10 +72,11 @@ class AuthNotifier extends ChangeNotifier {
       required context}) async {
     try {
       //isSignUp.isSignUp();
-      user = await firebaseAuth.createUserWithEmailAndPassword(
+      await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      userState.add({'isLoading': true, 'isSigned': false});
       final path = '$username images/userImage/$username image';
       await firebaseStorage.ref().child(path).putFile(imageF!);
       final imageUrl = await firebaseStorage.ref(path).getDownloadURL();
@@ -99,10 +89,11 @@ class AuthNotifier extends ChangeNotifier {
         "Password": password.toString(),
         "Username": username.toString(),
       });
-      content = {
-        'Username': username,
-        'ImageUrl': imageUrl,
-      };
+      // content = {
+      //   'Username': username,
+      //   'ImageUrl': imageUrl,
+      // };
+      userState.add({'isLoading': true, 'isSigned': true});
       //isSignUp.stopSignUp();
     } on FirebaseAuthException catch (error) {
       errorr = true;
