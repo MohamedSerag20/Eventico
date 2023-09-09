@@ -16,7 +16,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> userInfo = ref.watch(AuthProvider.notifier).content;
-    print(userInfo);
     if (userInfo.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(
@@ -32,7 +31,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 onPressed: () {
                   // ignore: invalid_use_of_protected_member
                   // ref.refresh(IsSignprovider.notifier).state;
-                  ref.refresh(AuthProvider.notifier);
+                  ref.invalidate(AuthProvider);
                   firebaseAuth.signOut();
                 },
                 icon: const Icon(Icons.exit_to_app))

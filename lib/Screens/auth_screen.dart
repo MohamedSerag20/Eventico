@@ -1,3 +1,4 @@
+import 'package:eventico/Screens/loading_screen.dart';
 import 'package:eventico/Widgets/login_texts.dart' as login;
 import 'package:eventico/Widgets/signup_texts.dart' as signup;
 import 'package:flutter/material.dart';
@@ -14,14 +15,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   var isLogin = true;
   var isLoading = false;
 
+  get builder => Image.asset('assets/images/MyLogo.jpg');
+
   @override
   Widget build(BuildContext context) {
-    bool? provState = ref.watch(AuthProvider.notifier).errorr;
-    print(provState);
-    if (provState ?? false) {
-      setState(() {
-        isLoading = false;
-      });
+    String error = ref.watch(AuthProvider.notifier).errorr;
+    print('read as $error');
+    if (error == 'true') {
+      isLoading = false;
     }
     return Scaffold(
       appBar: AppBar(
@@ -67,9 +68,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                   email: login.enteredEmail,
                                   password: login.enteredPassword,
                                   context: context);
-                              // ref
-                              //     .read(AuthProvider.notifier)
-                              //     .gettingNamePick(context);
+                              print('cell validation done');
                             }
                           } else {
                             if (signup.formKeyUp.currentState!.validate()) {
@@ -123,3 +122,4 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     );
   }
 }
+

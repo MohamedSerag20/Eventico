@@ -51,6 +51,7 @@ class _MyAppState extends ConsumerState<MyApp> {
                 print('fd');
                 ref.read(AuthProvider.notifier).gettingNamePick(context);
                 ref.read(ImportExportDataProvider.notifier).importingEvents();
+                print('arrived');
                 return const EventsScreen();
               } else {
                 return const AuthScreen();
@@ -59,27 +60,17 @@ class _MyAppState extends ConsumerState<MyApp> {
               if (snapshot.data!['isLoading']! && snapshot.data!['isSigned']!) {
                 print('second');
                 ref.read(AuthProvider.notifier).gettingNamePick(context);
-                ref.read(ImportExportDataProvider.notifier).importingEvents();
+                // ref.read(ImportExportDataProvider.notifier).importingEvents();
                 return const EventsScreen();
               } else {
                 ref.read(ImportExportDataProvider.notifier).importingEvents();
                 return const EventsScreen();
               }
             }
-            // else if (!snapshot.data!['isLoading']! &&
-            //     snapshot.data!['isSigned']!) {
-            //   ref.read(AuthProvider.notifier).gettingNamePick(context);
-            //   ref.read(ImportExportDataProvider.notifier).importingEvents();
-            //   return const EventsScreen();
-            // }
-            //firebaseAuth.signOut();
-            // else {
-            //   return const LoadingScreen();
-            // }
+            
           },
           stream: ref.watch(AuthProvider.notifier).userState.stream),
       themeMode: ThemeMode.dark,
     );
   }
 }
-//snapshot.data!['isLoading']! && !snapshot.data!['isSigned']!

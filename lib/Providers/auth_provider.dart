@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,28 +13,29 @@ final firebaseStorage = FirebaseStorage.instance;
 final fireStore = FirebaseFirestore.instance;
 
 class AuthNotifier extends ChangeNotifier {
-  // AuthNotifier({required this.isSignUp}) : super({});
   AuthNotifier() : super();
-  //IsSign isSignUp;
   String? email;
   String? password;
   Map<String, dynamic> content = {};
   StreamController<Map<String, bool>> userState = StreamController();
-  bool? errorr;
+  String errorr = "false";
 
 //////////////////////////////////////////////////////////////////////////////////////////////
   sign_in({required email, required password, required context}) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
+      final user = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      userState.add({'isLoading':true,'isSigned':true});
+      userState.add({'isLoading': true, 'isSigned': true});
     } on FirebaseAuthException catch (error) {
-      errorr = true;
+      // errorr = true;
+      // print('became true in provider');
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Authentication Failed')));
+          errorr = "true";
+      print('became true in provider');
     }
   }
 
@@ -56,7 +56,6 @@ class AuthNotifier extends ChangeNotifier {
       };
       userState.add({'isLoading': false, 'isSigned': true});
     } on Exception catch (error) {
-      errorr = true;
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(error.toString())));
@@ -71,7 +70,6 @@ class AuthNotifier extends ChangeNotifier {
       required imageF,
       required context}) async {
     try {
-      //isSignUp.isSignUp();
       await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -89,60 +87,19 @@ class AuthNotifier extends ChangeNotifier {
         "Password": password.toString(),
         "Username": username.toString(),
       });
-      // content = {
-      //   'Username': username,
-      //   'ImageUrl': imageUrl,
-      // };
       userState.add({'isLoading': true, 'isSigned': true});
-      //isSignUp.stopSignUp();
     } on FirebaseAuthException catch (error) {
-      errorr = true;
+      errorr = "true";
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Authentication Failed.')));
     }
   }
 
-  // void savingUser() async {
-  //   final path = '$username images/userImage/$username image';
-  //   await firebaseStorage.ref().child(path).putFile(imageF!);
-  //   final imageUrl = await firebaseStorage.ref(path).getDownloadURL();
-  //   fireStore
-  //       .collection(firebaseAuth.currentUser!.uid)
-  //       .doc('UserSpecifications')
-  //       .set({
-  //     "Email": email.toString(),
-  //     "ImageUrl": imageUrl.toString(),
-  //     "Password": password.toString(),
-  //     "Username": username.toString(),
-  //   });
-  //   state = {
-  //     'Username': username,
-  //     'ImageUrl': imageUrl,
-  //   };
-  //   //isSignUp.stopSignUp();
-  // }
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 }
-
-// class IsSign extends StateNotifier<bool> {
-//   IsSign() : super(false);
-
-//   isSignUp() {
-//     state = true;
-//   }
-
-//   stopSignUp() {
-//     state = false;
-//   }
-// }
 
 final AuthProvider = ChangeNotifierProvider<AuthNotifier>((ref) {
   // return AuthNotifier(isSignUp: ref.watch(IsSignprovider.notifier));
   return AuthNotifier();
 });
-
-// final IsSignprovider = StateNotifierProvider<IsSign, bool>((ref) {
-//   return IsSign();
-// });
