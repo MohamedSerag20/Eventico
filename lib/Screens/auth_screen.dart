@@ -13,17 +13,11 @@ class AuthScreen extends ConsumerStatefulWidget {
 
 class _AuthScreenState extends ConsumerState<AuthScreen> {
   var isLogin = true;
-  var isLoading = false;
+  
 
-  get builder => Image.asset('assets/images/MyLogo.jpg');
 
   @override
   Widget build(BuildContext context) {
-    String error = ref.watch(AuthProvider.notifier).errorr;
-    print('read as $error');
-    if (error == 'true') {
-      isLoading = false;
-    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Welcome to Eventico'),
@@ -60,21 +54,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         onPressed: () {
                           if (isLogin) {
                             if (login.formKeyLogin.currentState!.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
                               login.formKeyLogin.currentState!.save();
                               ref.read(AuthProvider.notifier).sign_in(
                                   email: login.enteredEmail,
                                   password: login.enteredPassword,
                                   context: context);
-                              print('cell validation done');
                             }
                           } else {
                             if (signup.formKeyUp.currentState!.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
                               signup.formKeyUp.currentState!.save();
                               if (signup.imageF == null) {
                                 ScaffoldMessenger.of(context).clearSnackBars();
@@ -82,9 +69,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                     const SnackBar(
                                         content:
                                             Text('You must submit an image.')));
-                                setState(() {
-                                  isLoading = false;
-                                });
                                 return;
                               }
                               ref.read(AuthProvider.notifier).sign_up(
@@ -97,8 +81,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                           }
                         },
                         child: Text(isLogin
-                            ? (isLoading ? "Loading..." : "Sign-in")
-                            : (isLoading ? "Loading..." : "Sign-up"))),
+                            ? ("Sign-in")
+                            : ("Sign-up"))),
                     const SizedBox(
                       width: 10,
                     ),

@@ -18,7 +18,6 @@ class AuthNotifier extends ChangeNotifier {
   String? password;
   Map<String, dynamic> content = {};
   StreamController<Map<String, bool>> userState = StreamController();
-  String errorr = "false";
 
 //////////////////////////////////////////////////////////////////////////////////////////////
   sign_in({required email, required password, required context}) async {
@@ -29,13 +28,9 @@ class AuthNotifier extends ChangeNotifier {
       );
       userState.add({'isLoading': true, 'isSigned': true});
     } on FirebaseAuthException catch (error) {
-      // errorr = true;
-      // print('became true in provider');
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Authentication Failed')));
-          errorr = "true";
-      print('became true in provider');
     }
   }
 
@@ -89,7 +84,6 @@ class AuthNotifier extends ChangeNotifier {
       });
       userState.add({'isLoading': true, 'isSigned': true});
     } on FirebaseAuthException catch (error) {
-      errorr = "true";
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Authentication Failed.')));

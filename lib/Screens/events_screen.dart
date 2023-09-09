@@ -29,9 +29,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           actions: [
             IconButton(
                 onPressed: () {
-                  // ignore: invalid_use_of_protected_member
-                  // ref.refresh(IsSignprovider.notifier).state;
-                  ref.invalidate(AuthProvider);
+                  ref.refresh(AuthProvider.notifier).userState;
                   firebaseAuth.signOut();
                 },
                 icon: const Icon(Icons.exit_to_app))

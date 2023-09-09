@@ -60,10 +60,10 @@ class _MyAppState extends ConsumerState<MyApp> {
               if (snapshot.data!['isLoading']! && snapshot.data!['isSigned']!) {
                 print('second');
                 ref.read(AuthProvider.notifier).gettingNamePick(context);
-                // ref.read(ImportExportDataProvider.notifier).importingEvents();
+                ref.read(ImportExportDataProvider.notifier).importingEvents();
                 return const EventsScreen();
               } else {
-                ref.read(ImportExportDataProvider.notifier).importingEvents();
+                //ref.read(ImportExportDataProvider.notifier).importingEvents();
                 return const EventsScreen();
               }
             }
