@@ -1,4 +1,3 @@
-import 'package:eventico/Screens/loading_screen.dart';
 import 'package:eventico/Widgets/login_texts.dart' as login;
 import 'package:eventico/Widgets/signup_texts.dart' as signup;
 import 'package:flutter/material.dart';

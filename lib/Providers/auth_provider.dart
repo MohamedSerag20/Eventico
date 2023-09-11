@@ -94,6 +94,5 @@ class AuthNotifier extends ChangeNotifier {
 }
 
 final AuthProvider = ChangeNotifierProvider<AuthNotifier>((ref) {
-  // return AuthNotifier(isSignUp: ref.watch(IsSignprovider.notifier));
   return AuthNotifier();
 });

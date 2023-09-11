@@ -29,8 +29,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           actions: [
             IconButton(
                 onPressed: () {
-                  ref.refresh(AuthProvider.notifier).userState;
                   firebaseAuth.signOut();
+                  ref.refresh(AuthProvider.notifier).userState;
                 },
                 icon: const Icon(Icons.exit_to_app))
           ],
@@ -60,6 +60,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       );
     } // the signUp checker
     else {
+      print("Loading Screen of Event Screen");
       return const LoadingScreen();
     }
   }

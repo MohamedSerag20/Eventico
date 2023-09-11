@@ -21,19 +21,14 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
     if (formKey.currentState!.validate()) {
       if (imagePF == null) {
         ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: const Text('You did not Select A Place Picture !!!',),backgroundColor: Theme.of(context).colorScheme.error,));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+            'You did not Select A Place Picture !!!',
+          ),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ));
       } else {
         formKey.currentState!.save();
-        // ref.read(ImportExportDataProvider.notifier).exportingEvents({
-        //   'Date': DateTime.now().toString(),
-        //   'Discription': discription.toString(),
-        //   'EventName': '',
-        //   'ImagesUrl': [],
-        //   'Story': story.toString(),
-        //   'UserKey': '',
-        //   'WithWhom': withWhom
-        // });
       }
     }
   }
@@ -69,23 +64,23 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
                                     Theme.of(context)
                                         .colorScheme
                                         .secondary
-                                        .withOpacity(0.05),
+                                        .withOpacity(0.02),
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondary
+                                        .withOpacity(0.04),
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondary
+                                        .withOpacity(0.06),
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondary
+                                        .withOpacity(0.08),
                                     Theme.of(context)
                                         .colorScheme
                                         .secondary
                                         .withOpacity(0.1),
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .secondary
-                                        .withOpacity(0.15),
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .secondary
-                                        .withOpacity(0.2),
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .secondary
-                                        .withOpacity(0.25),
                                   ]),
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(25))),
@@ -138,23 +133,23 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
                                   Theme.of(context)
                                       .colorScheme
                                       .secondary
-                                      .withOpacity(0.05),
+                                      .withOpacity(0.02),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.04),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.06),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.08),
                                   Theme.of(context)
                                       .colorScheme
                                       .secondary
                                       .withOpacity(0.1),
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .secondary
-                                      .withOpacity(0.15),
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .secondary
-                                      .withOpacity(0.2),
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .secondary
-                                      .withOpacity(0.25),
                                 ]),
                                 color: Theme.of(context)
                                     .colorScheme
@@ -227,23 +222,23 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
                                     Theme.of(context)
                                         .colorScheme
                                         .secondary
-                                        .withOpacity(0.05),
+                                        .withOpacity(0.02),
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondary
+                                        .withOpacity(0.04),
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondary
+                                        .withOpacity(0.06),
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .secondary
+                                        .withOpacity(0.08),
                                     Theme.of(context)
                                         .colorScheme
                                         .secondary
                                         .withOpacity(0.1),
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .secondary
-                                        .withOpacity(0.15),
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .secondary
-                                        .withOpacity(0.2),
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .secondary
-                                        .withOpacity(0.25),
                                   ]),
                                   color: Theme.of(context)
                                       .colorScheme
@@ -277,20 +272,24 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
                         gradient: LinearGradient(colors: [
                           Theme.of(context)
                               .colorScheme
-                              .surface
+                              .secondary
+                              .withOpacity(0.02),
+                          Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.04),
+                          Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.06),
+                          Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.08),
+                          Theme.of(context)
+                              .colorScheme
+                              .secondary
                               .withOpacity(0.1),
-                          Theme.of(context)
-                              .colorScheme
-                              .onBackground
-                              .withOpacity(0.15),
-                          Theme.of(context)
-                              .colorScheme
-                              .onBackground
-                              .withOpacity(0.2),
-                          Theme.of(context)
-                              .colorScheme
-                              .onBackground
-                              .withOpacity(0.25)
                         ])),
                     child: Column(
                       children: [
@@ -411,7 +410,8 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
                       width: 8,
                     ),
                     ElevatedButton(
-                        onPressed: () => validating(), child: const Text('Save'))
+                        onPressed: () => validating(),
+                        child: const Text('Save'))
                   ]),
             ],
           ),
