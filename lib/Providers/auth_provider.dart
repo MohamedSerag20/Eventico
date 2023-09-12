@@ -36,7 +36,6 @@ class AuthNotifier extends ChangeNotifier {
 
   gettingNamePick(BuildContext context) async {
     try {
-      //firebaseAuth.signOut();
       final currentUid = firebaseAuth.currentUser!.uid;
       final userCredintials = await FirebaseFirestore.instance
           .collection(currentUid)

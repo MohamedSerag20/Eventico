@@ -40,7 +40,9 @@ class EventCard extends StatelessWidget {
             style: ListTileStyle.list,
             hoverColor: Colors.amber,
             autofocus: true,
-            onTap: () {},
+            onTap: () {
+              print(event.story);
+            },
             leading: Text(
               event.imagesUrl.first,
               style: Theme.of(context).textTheme.titleMedium,

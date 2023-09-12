@@ -53,7 +53,6 @@ class _MyAppState extends ConsumerState<MyApp> {
               }
             } else {
               if (snapshot.data!['isLoading']! && snapshot.data!['isSigned']!) {
-                print('third');
                 ref.read(AuthProvider.notifier).gettingNamePick(context);
                 return const LoadingScreen();
               } else if (!snapshot.data!['isLoading']! &&

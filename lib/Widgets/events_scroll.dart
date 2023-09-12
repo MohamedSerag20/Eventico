@@ -14,9 +14,18 @@ class EventsAdd extends ConsumerStatefulWidget {
 class _EventsAddState extends ConsumerState<EventsAdd> {
   @override
   Widget build(BuildContext context) {
-    List<dynamic> userEventsArray = ref.watch(ImportExportDataProvider);
-    if (userEventsArray.isEmpty) {
-      return Center(child: Text("No Events Exist", style: Theme.of(context).textTheme.titleMedium,));
+    List<dynamic>? userEventsArray = ref.watch(ImportExportDataProvider);
+    print('watched');
+    if (userEventsArray == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (userEventsArray.isEmpty) {
+      return Center(
+          child: Text(
+        "No Events Exist",
+        style: Theme.of(context).textTheme.titleMedium,
+      ));
     }
     final userEventsTransArray = userEventsArray
         .map((e) => Event(

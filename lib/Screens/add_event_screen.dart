@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:eventico/Providers/importExportData_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,6 +30,7 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
         ));
       } else {
         formKey.currentState!.save();
+        //ref.read(ImportExportDataProvider.notifier).exportingEvents();
       }
     }
   }

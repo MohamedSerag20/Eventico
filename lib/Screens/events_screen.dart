@@ -1,3 +1,4 @@
+import 'package:eventico/Providers/importExportData_provider.dart';
 import 'package:eventico/Screens/add_event_screen.dart';
 import 'package:eventico/Screens/loading_screen.dart';
 import 'package:eventico/Widgets/events_scroll.dart';
@@ -31,6 +32,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 onPressed: () {
                   firebaseAuth.signOut();
                   ref.refresh(AuthProvider.notifier).userState;
+                  // ignore: invalid_use_of_protected_member
+                  ref.refresh(ImportExportDataProvider.notifier).state;
                 },
                 icon: const Icon(Icons.exit_to_app))
           ],
