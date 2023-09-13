@@ -44,7 +44,7 @@ class EventCard extends StatelessWidget {
               print(event.story);
             },
             leading: Text(
-              event.imagesUrl.first,
+              "#The place Photo",
               style: Theme.of(context).textTheme.titleMedium,
             ),
             trailing: Text(

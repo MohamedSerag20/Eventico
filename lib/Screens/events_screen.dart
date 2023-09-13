@@ -40,7 +40,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         ),
         body: Column(
           children: [
-            const Expanded(child: EventsAdd()),
+            const Expanded(child: EventsWidget()),
             Container(
               padding: const EdgeInsets.all(20),
               alignment: Alignment.bottomRight,

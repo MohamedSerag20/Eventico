@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -21,14 +24,25 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
   }
 
   exportingEvents(
-      {required String discription,
+      {required String username,
+        required String discription,
       required String eventName,
-      required List<String> imagesUrl,
+      required List<File> imagesF,
       required String story,
       required String userKey,
       required List<Map<String, String>> withWhom}) async {
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
-    final userCredintials = await FirebaseFirestore.instance
+    List<String> imagesUrl = [];
+    int imageNum = 1;
+
+    for (File imageF in imagesF) {
+      final path = '$username images/$eventName Images/"${imageNum.toString()}" image';
+      await FirebaseStorage.instance.ref().child(path).putFile(imageF);
+      imagesUrl.add(await FirebaseStorage.instance.ref(path).getDownloadURL());
+      imageNum++;
+    }
+
+    await FirebaseFirestore.instance
         .collection(currentUid)
         .doc('UserEvents')
         .update({
@@ -49,15 +63,12 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
       ...state!,
       {
         'Date': DateTime.now().toString(),
-        'Discription': '',
-        'EventName': '',
-        'ImagesUrl': ['', ''],
-        'Story': '',
-        'UserKey': '',
-        'WithWhom': [
-          {'Name': '', 'Email': ''},
-          {'Name': '', 'Email': ''}
-        ]
+        'Discription': discription,
+        'EventName': eventName,
+        'ImagesUrl': imagesUrl,
+        'Story': story,
+        'UserKey': userKey,
+        'WithWhom': withWhom
       }
     ];
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:eventico/Providers/auth_provider.dart';
 import 'package:eventico/Providers/importExportData_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,11 +14,13 @@ class AddEventScr extends ConsumerStatefulWidget {
 }
 
 class _AddEventScrState extends ConsumerState<AddEventScr> {
+  String? EventName;
   File? imagePF;
   List<File> imageFF = [];
   String? discription;
   String? story;
   List<Map<String, String>> withWhom = [];
+
   void validating() {
     if (formKey.currentState!.validate()) {
       if (imagePF == null) {
@@ -30,8 +33,16 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
         ));
       } else {
         formKey.currentState!.save();
-        //ref.read(ImportExportDataProvider.notifier).exportingEvents();
+        ref.read(ImportExportDataProvider.notifier).exportingEvents(
+            username: ref.read(AuthProvider.notifier).content["Username"],
+            discription: discription.toString(),
+            eventName: EventName!,
+            imagesF: [imagePF!, ...imageFF],
+            story: story!,
+            userKey: ValueKey(story!).toString(),
+            withWhom: withWhom);
       }
+      Navigator.pop(context);
     }
   }
 
@@ -294,7 +305,23 @@ class _AddEventScrState extends ConsumerState<AddEventScr> {
                               .withOpacity(0.1),
                         ])),
                     child: Column(
-                      children: [
+                      children: [TextFormField(
+                          maxLength: 300,
+                          decoration: const InputDecoration(
+                            label: Text('Event Name'),
+                          ),
+                          onSaved: (newValue) {
+                            EventName = newValue;
+                          },
+                          validator: (value) {
+                            if (value == null || value.length < 4) {
+                              return 'Should be more than than 4 Characters!';
+                            }
+                            return null;
+                          },
+                          enableSuggestions: false,
+                          maxLines: 1,
+                        ),
                         TextFormField(
                           maxLength: 300,
                           decoration: const InputDecoration(

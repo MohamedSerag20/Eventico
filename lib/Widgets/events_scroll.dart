@@ -4,18 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Models/event.dart';
 import '../Providers/importExportData_provider.dart';
 
-class EventsAdd extends ConsumerStatefulWidget {
-  const EventsAdd({super.key});
+class EventsWidget extends ConsumerStatefulWidget {
+  const EventsWidget({super.key});
 
   @override
-  ConsumerState<EventsAdd> createState() => _EventsAddState();
+  ConsumerState<EventsWidget> createState() => _EventsAddState();
 }
 
-class _EventsAddState extends ConsumerState<EventsAdd> {
+class _EventsAddState extends ConsumerState<EventsWidget> {
   @override
   Widget build(BuildContext context) {
     List<dynamic>? userEventsArray = ref.watch(ImportExportDataProvider);
-    print('watched');
     if (userEventsArray == null) {
       return const Center(
         child: CircularProgressIndicator(),
