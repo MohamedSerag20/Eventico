@@ -1,3 +1,4 @@
+import 'package:eventico/Screens/event_view.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/event.dart';
@@ -41,12 +42,14 @@ class EventCard extends StatelessWidget {
             hoverColor: Colors.amber,
             autofocus: true,
             onTap: () {
-              print(event.story);
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EventView(
+                  event: event,
+                ),
+              ));
             },
-            leading: Text(
-              "#The place Photo",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            leading:
+                CircleAvatar(foregroundImage: NetworkImage(event.imagesUrl[0])),
             trailing: Text(
               eventDate,
               style: Theme.of(context).textTheme.titleMedium,

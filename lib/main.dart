@@ -43,8 +43,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       title: 'Eventico',
       home: StreamBuilder(
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting ||
-                !snapshot.hasData) {
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
               if (firebaseAuth.currentUser != null) {
                 ref.read(AuthProvider.notifier).gettingNamePick(context);
                 return const LoadingScreen();

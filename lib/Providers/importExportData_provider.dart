@@ -25,18 +25,21 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
 
   exportingEvents(
       {required String username,
-        required String discription,
+      required String discription,
       required String eventName,
       required List<File> imagesF,
       required String story,
       required String userKey,
       required List<Map<String, String>> withWhom}) async {
+    List<dynamic>? userEvents = state;
+    state = null;
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     List<String> imagesUrl = [];
     int imageNum = 1;
 
     for (File imageF in imagesF) {
-      final path = '$username images/$eventName Images/"${imageNum.toString()}" image';
+      final path =
+          '$username images/$eventName Images/"${imageNum.toString()}" image';
       await FirebaseStorage.instance.ref().child(path).putFile(imageF);
       imagesUrl.add(await FirebaseStorage.instance.ref(path).getDownloadURL());
       imageNum++;
@@ -47,7 +50,7 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
         .doc('UserEvents')
         .update({
       'Events': [
-        ...state!,
+        ...userEvents ?? {},
         {
           'Date': DateTime.now().toString(),
           'Discription': discription,
@@ -60,7 +63,7 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
       ]
     });
     state = [
-      ...state!,
+      ...userEvents ?? {},
       {
         'Date': DateTime.now().toString(),
         'Discription': discription,
@@ -72,6 +75,11 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
       }
     ];
   }
+
+  refresh() {
+    state = null;
+  }
+
 }
 
 final ImportExportDataProvider =
