@@ -43,22 +43,27 @@ class _MyAppState extends ConsumerState<MyApp> {
       title: 'Eventico',
       home: StreamBuilder(
           builder: (context, snapshot) {
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
               if (firebaseAuth.currentUser != null) {
+                print('First');
                 ref.read(AuthProvider.notifier).gettingNamePick(context);
                 return const LoadingScreen();
               } else {
+                print('Second');
                 return const AuthScreen();
               }
             } else {
               if (snapshot.data!['isLoading']! && snapshot.data!['isSigned']!) {
+                print('Third');
                 ref.read(AuthProvider.notifier).gettingNamePick(context);
                 return const LoadingScreen();
               } else if (!snapshot.data!['isLoading']! &&
                   snapshot.data!['isSigned']!) {
+                print('Fourth');
                 ref.read(ImportExportDataProvider.notifier).importingEvents();
                 return const EventsScreen();
               } else {
+                print('Fifth');
                 return const LoadingScreen();
               }
             }

@@ -31,7 +31,7 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
       required String story,
       required String userKey,
       required List<Map<String, String>> withWhom}) async {
-    List<dynamic>? userEvents = state;
+    List<dynamic> userEvents = state!;
     state = null;
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     List<String> imagesUrl = [];
@@ -43,27 +43,48 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
       await FirebaseStorage.instance.ref().child(path).putFile(imageF);
       imagesUrl.add(await FirebaseStorage.instance.ref(path).getDownloadURL());
       imageNum++;
+      print(path);
     }
 
-    await FirebaseFirestore.instance
-        .collection(currentUid)
-        .doc('UserEvents')
-        .update({
-      'Events': [
-        ...userEvents ?? {},
-        {
-          'Date': DateTime.now().toString(),
-          'Discription': discription,
-          'EventName': eventName,
-          'ImagesUrl': imagesUrl,
-          'Story': story,
-          'UserKey': userKey,
-          'WithWhom': withWhom
-        }
-      ]
-    });
+    if (userEvents.isEmpty) {
+      await FirebaseFirestore.instance
+          .collection(currentUid)
+          .doc('UserEvents')
+          .set({
+        'Events': [
+          {
+            'Date': DateTime.now().toString(),
+            'Discription': discription,
+            'EventName': eventName,
+            'ImagesUrl': imagesUrl,
+            'Story': story,
+            'UserKey': userKey,
+            'WithWhom': withWhom
+          }
+        ]
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection(currentUid)
+          .doc('UserEvents')
+          .update({
+        'Events': [
+          ...userEvents,
+          {
+            'Date': DateTime.now().toString(),
+            'Discription': discription,
+            'EventName': eventName,
+            'ImagesUrl': imagesUrl,
+            'Story': story,
+            'UserKey': userKey,
+            'WithWhom': withWhom
+          }
+        ]
+      });
+    }
+
     state = [
-      ...userEvents ?? {},
+      ...userEvents,
       {
         'Date': DateTime.now().toString(),
         'Discription': discription,
@@ -79,7 +100,6 @@ class ImportExportDataNotifier extends StateNotifier<List<dynamic>?> {
   refresh() {
     state = null;
   }
-
 }
 
 final ImportExportDataProvider =

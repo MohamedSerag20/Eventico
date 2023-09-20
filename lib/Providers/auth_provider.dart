@@ -22,7 +22,7 @@ class AuthNotifier extends ChangeNotifier {
 //////////////////////////////////////////////////////////////////////////////////////////////
   sign_in({required email, required password, required context}) async {
     try {
-      final user = await firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -89,10 +89,10 @@ class AuthNotifier extends ChangeNotifier {
     }
   }
 
-  refresh() {
-    userState.add({});
-    //print('added');
-  }
+  // refresh() {
+  //   userState.add({});
+  //   //print('added');
+  // }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -24,72 +24,73 @@ class EventView extends StatelessWidget {
                   width: 210,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: FileImage(event.imagesUrl[0]!),
+                          image: NetworkImage(event.imagesUrl[0]!) ,
                           fit: BoxFit.cover),
                       color: Theme.of(context).colorScheme.primaryContainer,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(25)))),
-              const SizedBox(
-                height: 6,
-              ),
-              EVSigns(
-                  text: 'Family/Friends Pictures',
-                  color: Theme.of(context).colorScheme.onBackground),
-              ListView(
-                scrollDirection: Axis.horizontal,
-                children: event.imagesUrl
-                    .sublist(1)
-                    .map((imageUrl) => Container(
-                        height: 90,
-                        width: 105,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: FileImage(imageUrl), fit: BoxFit.cover),
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(25)))))
-                    .toList(),
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              EVSigns(
-                  text: 'Discription',
-                  color: Theme.of(context).colorScheme.onBackground),
-              Container(
-                margin: const EdgeInsets.all(4),
-                width: double.infinity,
-                alignment: Alignment.centerLeft,
-                decoration: const BoxDecoration(
-                    boxShadow: [BoxShadow()],
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
-                child: Card(child: Text(event.discription)),
-              ),
-              EVSigns(
-                  text: 'Story',
-                  color: Theme.of(context).colorScheme.onBackground),
-              Container(
-                margin: const EdgeInsets.all(4),
-                width: double.infinity,
-                alignment: Alignment.centerLeft,
-                decoration: const BoxDecoration(boxShadow: [BoxShadow()]),
-                child: Card(child: Text(event.discription)),
-              ),
-              if (event.withWhom.isNotEmpty)
-                Expanded(
-                    child: Column(
-                  children: [
-                    ...event.withWhom.map((e) => Container(
-                          color: Theme.of(context).colorScheme.onBackground,
-                          child: Row(children: [
-                            Text(e['Name']),
-                            const Spacer(),
-                            if (e["Email"] != null) Text(e["Email"])
-                          ]),
-                        ))
-                  ],
-                ))
+              // const SizedBox(
+              //   height: 6,
+              // ),
+              // EVSigns(
+              //     text: 'Family/Friends Pictures',
+              //     color: Theme.of(context).colorScheme.onBackground),
+              // ListView(
+              //   scrollDirection: Axis.horizontal,
+              //   children: event.imagesUrl
+              //       .sublist(1)
+              //       .map((imageUrl) => Container(
+              //           height: 90,
+              //           width: 105,
+              //           decoration: BoxDecoration(
+              //               image: DecorationImage(
+              //                   image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              //               color:
+              //                   Theme.of(context).colorScheme.primaryContainer,
+              //               borderRadius:
+              //                   const BorderRadius.all(Radius.circular(25)))))
+              //       .toList(),
+              // ),
+              // const SizedBox(
+              //   height: 6,
+              // ),
+              // EVSigns(
+              //     text: 'Discription',
+              //     color: Theme.of(context).colorScheme.onBackground),
+              // Container(
+              //   margin: const EdgeInsets.all(4),
+              //   width: double.infinity,
+              //   alignment: Alignment.centerLeft,
+              //   decoration: const BoxDecoration(
+              //       boxShadow: [BoxShadow()],
+              //       borderRadius: BorderRadius.all(Radius.circular(15))),
+              //   child: Card(child: Text(event.discription)),
+              // ),
+              // EVSigns(
+              //     text: 'Story',
+              //     color: Theme.of(context).colorScheme.onBackground),
+              // Container(
+              //   margin: const EdgeInsets.all(4),
+              //   width: double.infinity,
+              //   alignment: Alignment.centerLeft,
+              //   decoration: const BoxDecoration(boxShadow: [BoxShadow()]),
+              //   child: Card(child: Text(event.discription)),
+              // ),
+              // if (event.withWhom.isNotEmpty)
+              //   Expanded(
+              //       child: Column(
+              //     children: [
+              //       ...event.withWhom.map((e) => Container(
+              //             color: Theme.of(context).colorScheme.onBackground,
+              //             child: Row(children: [
+              //               Text(e['Name']),
+              //               const Spacer(),
+              //               if (e["Email"] != null) Text(e["Email"])
+              //             ]),
+              //           ))
+              //     ],
+              //   ))
+            
             ]),
           )),
     );
